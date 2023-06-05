@@ -1,12 +1,10 @@
-import React from 'react';
 import './App.css';
+import { FormModule } from './components/form';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <span>Hello!</span>
-      </header>
+    <div className="flex flex-row justify-center content-center h-screen m-8">
+      <FormModule />
     </div>
   );
 }
