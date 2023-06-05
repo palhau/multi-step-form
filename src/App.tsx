@@ -1,10 +1,10 @@
 import './App.css';
-import { FormModule } from './components/FormModule';
+import { Steps } from './components/Steps';
 
 function App() {
   return (
     <div className="flex flex-row justify-center content-center h-screen m-8">
-      <FormModule />
+      <Steps />
     </div>
   );
 }

@@ -6,7 +6,7 @@ interface ValueTypePickerProps {
 }
 export const ValueTypePicker = ({ setSelection }: ValueTypePickerProps) => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col items-center">
       <h2>Select the Value Type: </h2>
       <RadioGroup
         onValueChange={(value) => setSelection(value)}
