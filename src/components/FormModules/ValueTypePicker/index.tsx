@@ -6,8 +6,8 @@ interface ValueTypePickerProps {
 }
 export const ValueTypePicker = ({ setSelection }: ValueTypePickerProps) => {
   return (
-    <div className="flex flex-col items-center">
-      <h2>Select the Value Type: </h2>
+    <div className="flex flex-col items-start mb-4 ml-4">
+      <h2 className="items-start">Type: </h2>
       <RadioGroup
         onValueChange={(value) => setSelection(value)}
         defaultValue="fixed"
