@@ -1,17 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { DatePicker, ValueTypePicker, AmountInput } from '../FormModules';
+import { ValueTypePicker, AmountInput } from '../FormModules';
 import { CalendarStep } from './CalendarStep';
 import { Button } from '../ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ValueTypeStep } from './ValueTypeStep';
 
 export const Steps = () => {
   const [amount, setAmount] = useState<string>();
   const [finalVlue, setFinalValue] = useState<number | string>();
-  const [valueType, setValueType] = useState<string>('fixed' || 'percentage');
-  const onSubmit = () => {
-    console.log('Enviado');
-  };
 
   const steps = [
     {
@@ -38,26 +35,6 @@ export const Steps = () => {
     setCurrentStep((prevState) => prevState - 1);
   };
 
-  useEffect(() => {
-    const value = amount && Number.parseFloat(amount);
-    switch (valueType) {
-      case 'fixed':
-        value && setFinalValue(value.toFixed());
-        break;
-
-      case 'percentage':
-        let formatedValue =
-          value &&
-          Number(value / 100).toLocaleString(undefined, {
-            style: 'percent',
-            minimumFractionDigits: 2,
-          });
-        setFinalValue(formatedValue);
-        break;
-    }
-    console.log(finalVlue);
-  }, [amount, valueType, finalVlue]);
-
   return (
     <div className="flex flex-col justify-start rounded-xl w-[700px] h-fit p-8 bg-white">
       {steps[currentStep].id === 'DATE' && (
@@ -73,7 +50,7 @@ export const Steps = () => {
           <h2 className="mb-6 font-bold text-center text-lg">
             {steps[currentStep].title}
           </h2>
-          <ValueTypePicker setSelection={setValueType} />
+          <ValueTypeStep />
         </section>
       )}
       {steps[currentStep].id === 'AMOUNT' && (
