@@ -14,7 +14,7 @@ function App() {
         setForm,
       }}
     >
-      <div className="flex flex-row justify-center content-center items-center h-screen m-8">
+      <div className="flex flex-row justify-center content-center items-center h-screen m-8 font-mono">
         <Steps />
       </div>
       <Toaster />

@@ -49,7 +49,7 @@ export const AmountStep = () => {
   };
   const AmountComponent = <AmountInput onSave={handleSave} />;
   return (
-    <div className="items-center">
+    <div className="items-center bg-slate-500/20 p-4 rounded-xl ml-4 mr-4">
       <h2 className="mb-2">Input the amount: </h2>
       {AmountComponent}
       {components.map((component, index) => (
