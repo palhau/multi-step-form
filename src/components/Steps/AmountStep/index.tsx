@@ -3,10 +3,12 @@ import { Button } from '../../ui/button';
 import { Trash2 } from 'lucide-react';
 import { AmountInput } from '../../FormModules';
 import FormStateContext from '../../../lib/formContext';
+import { useToast } from '../../ui/use-toast';
 
 export const AmountStep = () => {
   const [components, setComponents] = useState<React.ReactNode[]>([]);
   const { setForm } = useContext(FormStateContext);
+  const { toast } = useToast();
 
   const addComponent = () => {
     setComponents((prevComponents) => [...prevComponents, AmountComponent]);
@@ -21,16 +23,29 @@ export const AmountStep = () => {
   };
 
   const handleSave = (amount: string) => {
-    setForm((prevForm) => ({
-      ...prevForm,
-      amount: {
-        ...prevForm.amount,
-        valid: amount ? true : false,
-        value: {
-          amounts: [...prevForm.amount.value.amounts, amount],
+    try {
+      setForm((prevForm) => ({
+        ...prevForm,
+        amount: {
+          ...prevForm.amount,
+          valid: amount ? true : false,
+          value: {
+            amounts: [...prevForm.amount.value.amounts, amount],
+          },
         },
-      },
-    }));
+      }));
+      toast({
+        variant: 'success',
+        title: 'Success!',
+        description: 'Date Interval Saved',
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error!',
+        description: `Error message: ${error}`,
+      });
+    }
   };
   const AmountComponent = <AmountInput onSave={handleSave} />;
   return (

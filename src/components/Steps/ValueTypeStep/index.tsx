@@ -3,10 +3,12 @@ import { Button } from '../../ui/button';
 import { Trash2 } from 'lucide-react';
 import { ValueTypePicker } from '../../FormModules';
 import FormStateContext from '../../../lib/formContext';
+import { useToast } from '../../ui/use-toast';
 
 export const ValueTypeStep = () => {
   const [components, setComponents] = useState<React.ReactNode[]>([]);
   const { setForm } = useContext(FormStateContext);
+  const { toast } = useToast();
 
   const addComponent = () => {
     setComponents((prevComponents) => [...prevComponents, TypesComponent]);
@@ -20,16 +22,29 @@ export const ValueTypeStep = () => {
     });
   };
   const handleSave = (type: string) => {
-    setForm((prevForm) => ({
-      ...prevForm,
-      valueTypes: {
-        ...prevForm.valueTypes,
-        valid: type ? true : false,
-        value: {
-          types: [...prevForm.valueTypes.value.types, type],
+    try {
+      setForm((prevForm) => ({
+        ...prevForm,
+        valueTypes: {
+          ...prevForm.valueTypes,
+          valid: type ? true : false,
+          value: {
+            types: [...prevForm.valueTypes.value.types, type],
+          },
         },
-      },
-    }));
+      }));
+      toast({
+        variant: 'success',
+        title: 'Success!',
+        description: 'Date Interval Saved',
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error!',
+        description: `Error message: ${error}`,
+      });
+    }
   };
   const TypesComponent = <ValueTypePicker onSave={handleSave} />;
   return (

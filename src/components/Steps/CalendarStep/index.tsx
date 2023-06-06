@@ -1,13 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { DatePicker } from '../../FormModules';
 import { Button } from '../../ui/button';
 import { Trash2 } from 'lucide-react';
 import FormStateContext from '../../../lib/formContext';
 import { format } from 'date-fns';
+import { useToast } from '../../ui/use-toast';
 
 export const CalendarStep = () => {
   const [components, setComponents] = useState<React.ReactNode[]>([]);
-  const { form, setForm } = useContext(FormStateContext);
+  const { setForm } = useContext(FormStateContext);
+  const { toast } = useToast();
 
   const addComponent = () => {
     setComponents((prevComponents) => [...prevComponents, DateComponent]);
@@ -22,28 +24,33 @@ export const CalendarStep = () => {
   };
 
   const handleSave = (start: Date, end: Date) => {
-    const newIntervals = [
-      { start: format(start, 'PPP'), end: format(end, 'PPP') },
-    ];
-    setForm((prevForm) => ({
-      ...prevForm,
-      date: {
-        ...prevForm.date,
-        valid: newIntervals ? true : false,
-        value: {
-          ...prevForm.date.value,
-          intervals: {
-            ...prevForm.date.value.intervals,
-            ...newIntervals,
+    try {
+      setForm((prevForm) => ({
+        ...prevForm,
+        date: {
+          ...prevForm.date,
+          valid: start && end ? true : false,
+          value: {
+            intervals: [
+              ...prevForm.date.value.intervals,
+              { start: format(start, 'PPP'), end: format(end, 'PPP') },
+            ],
           },
         },
-      },
-    }));
+      }));
+      toast({
+        variant: 'success',
+        title: 'Success!',
+        description: 'Date Interval Saved',
+      });
+    } catch (error) {
+      toast({
+        variant: 'destructive',
+        title: 'Error!',
+        description: `Error message: ${error}`,
+      });
+    }
   };
-
-  useEffect(() => {
-    console.log(form.date);
-  }, [form]);
 
   const DateComponent = <DatePicker onSave={handleSave} />;
 
