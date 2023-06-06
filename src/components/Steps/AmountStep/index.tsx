@@ -36,7 +36,7 @@ export const AmountStep = () => {
         </div>
       ))}
       <Button className="mt-4 ml-0" variant={'link'} onClick={addComponent}>
-        + Add More Types
+        + Add More Amounts
       </Button>
     </div>
   );

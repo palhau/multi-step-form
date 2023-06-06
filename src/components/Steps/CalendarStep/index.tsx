@@ -46,7 +46,7 @@ export const CalendarStep = () => {
         </div>
       ))}
       <Button variant={'link'} onClick={addComponent}>
-        + Add More Interval
+        + Add More Intervals
       </Button>
     </div>
   );
