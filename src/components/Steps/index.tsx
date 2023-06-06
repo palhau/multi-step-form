@@ -5,11 +5,9 @@ import { CalendarStep } from './CalendarStep';
 import { Button } from '../ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ValueTypeStep } from './ValueTypeStep';
+import { AmountStep } from './AmountStep';
 
 export const Steps = () => {
-  const [amount, setAmount] = useState<string>();
-  const [finalVlue, setFinalValue] = useState<number | string>();
-
   const steps = [
     {
       id: 'DATE',
@@ -22,6 +20,10 @@ export const Steps = () => {
     {
       id: 'AMOUNT',
       title: 'Insert the value amount',
+    },
+    {
+      id: 'SUMMARY',
+      title: 'Summary',
     },
   ];
 
@@ -58,7 +60,15 @@ export const Steps = () => {
           <h2 className="mb-6 font-bold text-center text-lg">
             {steps[currentStep].title}
           </h2>
-          <AmountInput setAmount={setAmount} />
+          <AmountStep />
+        </section>
+      )}
+      {steps[currentStep].id === 'SUMMARY' && (
+        <section>
+          <h2 className="mb-6 font-bold text-center text-lg">
+            {steps[currentStep].title}
+          </h2>
+          <span>Summary Here!</span>
         </section>
       )}
       <div className="w-full mt-8 flex flex-row justify-between">
@@ -72,7 +82,7 @@ export const Steps = () => {
         <Button
           variant={'ghost'}
           onClick={handleNextStep}
-          disabled={currentStep >= 2}
+          disabled={currentStep >= 3}
         >
           <ArrowRight className="ml-auto h-8 w-8" />
         </Button>
