@@ -17,7 +17,7 @@ export const DatePicker = ({ onSave }: CalendarButtonProps) => {
         <PopoverTrigger asChild>
           <Button
             variant={'outline'}
-            className=" m-2 w-[240px] pl-3 text-left font-normal"
+            className="rounded-xl m-2 w-[240px] pl-3 text-left font-normal"
           >
             {startDate ? (
               <span>{format(startDate, 'PPP')}</span>
@@ -43,7 +43,7 @@ export const DatePicker = ({ onSave }: CalendarButtonProps) => {
         <PopoverTrigger asChild>
           <Button
             variant={'outline'}
-            className=" m-2 w-[240px] pl-3 text-left font-normal"
+            className="rounded-xl m-2 w-[240px] pl-3 text-left font-normal"
           >
             {endDate ? (
               <span>{format(endDate, 'PPP')}</span>

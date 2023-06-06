@@ -9,19 +9,19 @@ export const FORM_STATE = {
   date: {
     valid: false,
     value: {
-      intervals: [{}],
+      intervals: [{start: '', end: ''}],
     },
   },
   valueTypes: {
     valid: false,
     value: {
-      types: [],
+      types: [''],
     },
   },
   amount: {
     valid: false,
     value: {
-      amounts: [],
+      amounts: [''],
     },
   },
 };
