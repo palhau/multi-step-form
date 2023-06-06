@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ValueTypeStep } from './ValueTypeStep';
 import { AmountStep } from './AmountStep';
 import FormStateContext from '../../lib/formContext';
+import { Badge } from '../ui/badge';
 
 export const Steps = () => {
   const { form } = useContext(FormStateContext);
@@ -38,10 +39,19 @@ export const Steps = () => {
   };
 
   return (
-    <div className="flex flex-col justify-start rounded-xl w-[700px] h-fit p-8 bg-white">
+    <div className="flex flex-col justify-start rounded-xl w-[700px] h-fit pt-8 pb-8 bg-white">
+      <section className="items-center m-auto mb-8 mt-0">
+        <Badge className="text-base" variant="step">
+          {currentStep <= 2 ? (
+            <span>STEP: {currentStep + 1}</span>
+          ) : (
+            'Completed'
+          )}
+        </Badge>
+      </section>
       {steps[currentStep].id === 'DATE' && (
         <section>
-          <h2 className="mb-6 font-bold text-center text-lg">
+          <h2 className="mb-6 font-bold text-center text-xl">
             {steps[currentStep].title}
           </h2>
           <CalendarStep />
@@ -49,7 +59,7 @@ export const Steps = () => {
       )}
       {steps[currentStep].id === 'TYPE' && (
         <section>
-          <h2 className="mb-6 font-bold text-center text-lg">
+          <h2 className="mb-6 font-bold text-center text-xl">
             {steps[currentStep].title}
           </h2>
           <ValueTypeStep />
@@ -57,7 +67,7 @@ export const Steps = () => {
       )}
       {steps[currentStep].id === 'AMOUNT' && (
         <section>
-          <h2 className="mb-6 font-bold text-center text-lg">
+          <h2 className="mb-6 font-bold text-center text-xl">
             {steps[currentStep].title}
           </h2>
           <AmountStep />
@@ -65,10 +75,10 @@ export const Steps = () => {
       )}
       {steps[currentStep].id === 'SUMMARY' && (
         <section>
-          <h2 className="mb-6 font-bold text-center text-lg">
+          <h2 className="mb-6 font-bold text-center text-xl">
             {steps[currentStep].title}
           </h2>
-          <div className="flex flex-col flex-wrap p-4 bg-black/25">
+          <div className="flex flex-col flex-wrap p-4 bg-black/25 ml-4 mr-4">
             <pre>{JSON.stringify(form, null, 2)}</pre>
           </div>
         </section>
@@ -81,7 +91,8 @@ export const Steps = () => {
         >
           <ArrowLeft className="ml-auto h-8 w-8" />
         </Button>
-        {currentStep <= 2 && (
+
+        {currentStep < 2 && (
           <Button
             variant={'ghost'}
             onClick={handleNextStep}
@@ -90,10 +101,11 @@ export const Steps = () => {
             <ArrowRight className="ml-auto h-8 w-8" />
           </Button>
         )}
+
         {currentStep === 2 && (
           <Button
             variant={'outline'}
-            className="rounded-xl w-40 hover:bg-blue-500"
+            className="rounded-xl w-40 mr-4 hover:bg-blue-500"
             onClick={handleNextStep}
             disabled={currentStep >= 3}
           >
