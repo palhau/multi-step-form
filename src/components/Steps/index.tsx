@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { CalendarStep } from './CalendarStep';
 import { Button } from '../ui/button';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { ValueTypeStep } from './ValueTypeStep';
 import { AmountStep } from './AmountStep';
+import FormStateContext from '../../lib/formContext';
 
 export const Steps = () => {
+  const { form } = useContext(FormStateContext);
   const steps = [
     {
       id: 'DATE',
@@ -66,7 +68,9 @@ export const Steps = () => {
           <h2 className="mb-6 font-bold text-center text-lg">
             {steps[currentStep].title}
           </h2>
-          <span>Summary Here!</span>
+          <div className="flex flex-col flex-wrap p-4 bg-black/25">
+            <pre>{JSON.stringify(form, null, 2)}</pre>
+          </div>
         </section>
       )}
       <div className="w-full mt-8 flex flex-row justify-between">
@@ -77,13 +81,25 @@ export const Steps = () => {
         >
           <ArrowLeft className="ml-auto h-8 w-8" />
         </Button>
-        <Button
-          variant={'ghost'}
-          onClick={handleNextStep}
-          disabled={currentStep >= 3}
-        >
-          <ArrowRight className="ml-auto h-8 w-8" />
-        </Button>
+        {currentStep <= 2 && (
+          <Button
+            variant={'ghost'}
+            onClick={handleNextStep}
+            disabled={currentStep >= 3}
+          >
+            <ArrowRight className="ml-auto h-8 w-8" />
+          </Button>
+        )}
+        {currentStep === 2 && (
+          <Button
+            variant={'outline'}
+            className="rounded-xl w-40 hover:bg-blue-500"
+            onClick={handleNextStep}
+            disabled={currentStep >= 3}
+          >
+            Finish
+          </Button>
+        )}
       </div>
     </div>
   );

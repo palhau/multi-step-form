@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button } from '../../ui/button';
 import { Trash2 } from 'lucide-react';
 import { ValueTypePicker } from '../../FormModules';
+import FormStateContext from '../../../lib/formContext';
 
 export const ValueTypeStep = () => {
-  const [valueType, setValueType] = useState<string>('fixed' || 'percentage');
   const [components, setComponents] = useState<React.ReactNode[]>([]);
+  const { setForm } = useContext(FormStateContext);
 
   const addComponent = () => {
     setComponents((prevComponents) => [...prevComponents, TypesComponent]);
@@ -18,7 +19,19 @@ export const ValueTypeStep = () => {
       return updatedComponents;
     });
   };
-  const TypesComponent = <ValueTypePicker setSelection={setValueType} />;
+  const handleSave = (type: string) => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      valueTypes: {
+        ...prevForm.date,
+        valid: type ? true : false,
+        value: {
+          types: [...prevForm.valueTypes.value.types, type],
+        },
+      },
+    }));
+  };
+  const TypesComponent = <ValueTypePicker onSave={handleSave} />;
   return (
     <div className="items-center">
       <h2 className="mb-2">Select the Types: </h2>
