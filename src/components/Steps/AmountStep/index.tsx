@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { DatePicker } from '../../FormModules';
 import { Button } from '../../ui/button';
 import { Trash2 } from 'lucide-react';
+import { AmountInput } from '../../FormModules';
 
-export const CalendarStep = () => {
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
+export const AmountStep = () => {
+  const [amount, setAmount] = useState<string>();
   const [components, setComponents] = useState<React.ReactNode[]>([]);
 
   const addComponent = () => {
-    setComponents((prevComponents) => [...prevComponents, DateComponent]);
+    setComponents((prevComponents) => [...prevComponents, AmountComponent]);
   };
 
   const removeComponent = (index: number) => {
@@ -19,34 +18,25 @@ export const CalendarStep = () => {
       return updatedComponents;
     });
   };
-
-  const DateComponent = (
-    <DatePicker
-      startDate={startDate}
-      setStartDate={setStartDate}
-      endDate={endDate}
-      setEndDate={setEndDate}
-    />
-  );
-
+  const AmountComponent = <AmountInput setAmount={setAmount} />;
   return (
     <div className="items-center">
-      <h2 className="mb-2">Select the Dates: </h2>
-      {DateComponent}
+      <h2 className="mb-2">Input the amount: </h2>
+      {AmountComponent}
       {components.map((component, index) => (
         <div id="index" className="flex flex-row items-center">
           {component}
           <Button
             onClick={() => removeComponent(index)}
             variant={'ghost'}
-            className="w-[50px] pl-3 text-left font-normal"
+            className="w-[50px] pl-4 ml-4 text-left font-normal self-end"
           >
             <Trash2 className="ml-auto h-4 w-4" />
           </Button>
         </div>
       ))}
-      <Button variant={'link'} onClick={addComponent}>
-        + Add More Intervals
+      <Button className="mt-4 ml-0" variant={'link'} onClick={addComponent}>
+        + Add More Amounts
       </Button>
     </div>
   );
