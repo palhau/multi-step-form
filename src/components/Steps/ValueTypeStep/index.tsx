@@ -23,7 +23,7 @@ export const ValueTypeStep = () => {
     setForm((prevForm) => ({
       ...prevForm,
       valueTypes: {
-        ...prevForm.date,
+        ...prevForm.valueTypes,
         valid: type ? true : false,
         value: {
           types: [...prevForm.valueTypes.value.types, type],

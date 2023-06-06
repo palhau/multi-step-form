@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Button } from '../../ui/button';
 import { Trash2 } from 'lucide-react';
 import { AmountInput } from '../../FormModules';
+import FormStateContext from '../../../lib/formContext';
 
 export const AmountStep = () => {
-  const [amount, setAmount] = useState<string>();
   const [components, setComponents] = useState<React.ReactNode[]>([]);
+  const { setForm } = useContext(FormStateContext);
 
   const addComponent = () => {
     setComponents((prevComponents) => [...prevComponents, AmountComponent]);
@@ -18,7 +19,20 @@ export const AmountStep = () => {
       return updatedComponents;
     });
   };
-  const AmountComponent = <AmountInput setAmount={setAmount} />;
+
+  const handleSave = (amount: string) => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      amount: {
+        ...prevForm.amount,
+        valid: amount ? true : false,
+        value: {
+          amounts: [...prevForm.amount.value.amounts, amount],
+        },
+      },
+    }));
+  };
+  const AmountComponent = <AmountInput onSave={handleSave} />;
   return (
     <div className="items-center">
       <h2 className="mb-2">Input the amount: </h2>
