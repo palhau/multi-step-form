@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from '../../ui/input';
+import { Button } from '../../ui/button';
+import { Save } from 'lucide-react';
 
 interface AmountInputProps {
-  setAmount: React.Dispatch<React.SetStateAction<string | undefined>>;
+  onSave: (amount: string) => void;
 }
-export const AmountInput = ({ setAmount }: AmountInputProps) => {
+export const AmountInput = ({ onSave }: AmountInputProps) => {
+  const [amount, setAmount] = useState<string>();
   const handleAmount = (event: React.ChangeEvent<HTMLInputElement>) =>
     setAmount(event.target.value);
 
@@ -17,6 +20,13 @@ export const AmountInput = ({ setAmount }: AmountInputProps) => {
         type="number"
         onChange={handleAmount}
       />
+      <Button
+        onClick={() => amount && onSave(amount)}
+        variant={'ghost'}
+        className="w-[50px] pl-3 ml-4 text-left font-normal self-center"
+      >
+        <Save className="ml-auto h-4 w-4" />
+      </Button>
     </div>
   );
 };
