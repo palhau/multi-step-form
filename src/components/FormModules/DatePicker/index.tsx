@@ -1,23 +1,16 @@
-import React from 'react';
+import { useState } from 'react';
 import { Popover, PopoverTrigger, PopoverContent } from '../../ui/popover';
 import { Button } from '../../ui/button';
 import { format } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, Save } from 'lucide-react';
 import { Calendar } from '../../ui/calendar';
-import { SelectSingleEventHandler } from 'react-day-picker';
 
 interface CalendarButtonProps {
-  startDate?: Date;
-  setStartDate: SelectSingleEventHandler;
-  endDate?: Date;
-  setEndDate: SelectSingleEventHandler;
+  onSave: (start: Date, end: Date) => void;
 }
-export const DatePicker = ({
-  startDate,
-  setStartDate,
-  endDate,
-  setEndDate,
-}: CalendarButtonProps) => {
+export const DatePicker = ({ onSave }: CalendarButtonProps) => {
+  const [startDate, setStartDate] = useState<Date>();
+  const [endDate, setEndDate] = useState<Date>();
   return (
     <div className="items-center">
       <Popover>
@@ -71,6 +64,13 @@ export const DatePicker = ({
           />
         </PopoverContent>
       </Popover>
+      <Button
+        onClick={() => startDate && endDate && onSave(startDate, endDate)}
+        variant={'ghost'}
+        className="w-[50px] pl-3 text-left font-normal"
+      >
+        <Save className="ml-auto h-4 w-4" />
+      </Button>
     </div>
   );
 };
